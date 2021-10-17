@@ -1,0 +1,23 @@
+{
+  "title": "Course project",
+  "description": {
+    "home": "Home",
+    "login": "Login",
+    "register": "Register"
+  },
+  "login": {
+    "signIn": "Sign In",
+    "email": "Email Address",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "notHaveAccount": "Don't have an account? Sign Up"
+  },
+  "register": {
+    "signUp": "Sign Up",
+    "email": "Email Address",
+    "name": "Name",
+    "password": "Password",
+    "passwordConfirm": "Password Confirm",
+    "HaveAccount": "Do have an account? Sign In"
+  }
+}

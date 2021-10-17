@@ -1,0 +1,23 @@
+{
+  "title": "Курсовой проект",
+  "description": {
+    "home": "Домой",
+    "login": "Войти",
+    "register": "Регистрация"
+  },
+  "login": {
+    "signIn": "Войти",
+    "email": "Электронная почта",
+    "password": "Пароль",
+    "forgotPassword": "Забыли пароль?",
+    "notHaveAccount": "Нет аккаунта? Зарегестрироваться"
+  },
+  "register": {
+    "signUp": "Регистрация",
+    "email": "Электронная почта",
+    "name": "Имя",
+    "password": "Пароль",
+    "passwordConfirm": "Потвердите пароль",
+    "HaveAccount": "Есть аккаунт? Войти"
+  }
+}
