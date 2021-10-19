@@ -1,21 +1,37 @@
 import {LoginActionTypes} from "../types/LoginActionTypes";
-import {LoginAction, LoginState} from "../types/loginTypes";
+import {LoginAction, LoginState} from "../types/LoginTypes";
+import {AuthorizeResponse} from "../../../Shared/types/Response";
 
 const initialState: LoginState = {
-    data: null as [] | null,
+    data: null as AuthorizeResponse | null,
     loading: false,
-    error: null as string | null
+    error: null as AuthorizeResponse | null
 }
 
 // TODO: чекать
 export const loginReducer = (state = initialState, action: LoginAction): LoginState => {
     switch (action.type) {
         case LoginActionTypes.LOGIN:
-            return {loading: true, error: null, data: []}
+            return {
+                ...state,
+                loading: true,
+                error: null,
+                data: null
+            }
         case LoginActionTypes.LOGIN_SUCCESS:
-            return {loading: false, error: null, data: action.payload}
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                data: action.payload
+            }
         case LoginActionTypes.LOGIN_ERROR:
-            return {loading: true, error: action.payload, data: []}
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+                data: null
+            }
         default:
             return state;
     }

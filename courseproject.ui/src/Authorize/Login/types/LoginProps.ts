@@ -1,12 +1,12 @@
 import {TFunction} from "react-i18next";
-import React from "react";
-import {ILoginModel} from "../store/types/ILoginModel";
+import {SchemaOf} from "yup";
+import {LoginFormValues} from "./LoginFormValues";
+import {LoginState} from "../store/types/LoginTypes";
 
 export type LoginProps = {
-    values: ILoginModel,
-    handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    resetForm: () => void;
     t: TFunction;
+    loginState: LoginState;
     redirect: boolean;
-    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+    validation: SchemaOf<LoginFormValues>;
+    handleSubmit: (values: LoginFormValues) => void;
 }
