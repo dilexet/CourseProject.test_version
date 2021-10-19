@@ -1,8 +1,10 @@
 import {TFunction} from "react-i18next";
-import React from "react";
+import {SchemaOf} from "yup";
+import {RegisterFormValues} from "./RegisterFormValues";
 
 export type RegisterProps = {
     t: TFunction;
     redirect: boolean;
-    handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+    validation: SchemaOf<RegisterFormValues>;
+    handleSubmit: (values: RegisterFormValues) => void;
 }

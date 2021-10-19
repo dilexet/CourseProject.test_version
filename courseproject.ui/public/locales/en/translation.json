@@ -7,7 +7,7 @@
   },
   "login": {
     "signIn": "Sign In",
-    "email": "Email Address",
+    "login": "Email Address or nickname",
     "password": "Password",
     "forgotPassword": "Forgot password?",
     "notHaveAccount": "Don't have an account? Sign Up"

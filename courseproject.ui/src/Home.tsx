@@ -1,11 +1,19 @@
 import React from 'react';
 import {Typography} from '@mui/material';
+import {useTypeSelector} from "./Shared/hooks/useTypeSelector";
 
 const Home: React.FC = () => {
+    const state = useTypeSelector(x => x.login);
+
     return (
-        <Typography>
-            Home
-        </Typography>
+        <div>
+            <Typography>
+                Home
+            </Typography>
+            <Typography>
+                {state.data ? state.data.message : ""}
+            </Typography>
+        </div>
     );
 }
 

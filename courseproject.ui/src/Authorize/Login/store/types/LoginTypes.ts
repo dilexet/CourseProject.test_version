@@ -1,9 +1,10 @@
 import {LoginActionTypes} from "./LoginActionTypes";
+import {AuthorizeResponse} from "../../../Shared/types/Response";
 
 export interface LoginState {
-    data: any[] | unknown;
+    data: AuthorizeResponse | null;
     loading: boolean;
-    error: string | null;
+    error: AuthorizeResponse | null;
 }
 
 interface SendLoginAction {
@@ -12,12 +13,12 @@ interface SendLoginAction {
 
 interface SendLoginSuccessAction {
     type: LoginActionTypes.LOGIN_SUCCESS;
-    payload: any[] | unknown
+    payload: AuthorizeResponse | null
 }
 
 interface SendLoginErrorAction {
     type: LoginActionTypes.LOGIN_ERROR;
-    payload: string | null
+    payload: AuthorizeResponse | null
 }
 
 export type LoginAction = SendLoginAction | SendLoginSuccessAction | SendLoginErrorAction;
