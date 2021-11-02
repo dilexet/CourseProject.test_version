@@ -17,7 +17,35 @@ import Select from '@mui/material/Select';
 import {ButtonAppBarProps} from "../types/ButtonAppBarProps";
 
 
-const ButtonAppBar: React.FC<ButtonAppBarProps> = ({t, language, darkMode, onChangeLanguage, onChangeTheme}) => {
+const ButtonAppBar: React.FC<ButtonAppBarProps> = ({
+                                                       t,
+                                                       isAuthorize,
+                                                       language,
+                                                       darkMode,
+                                                       onChangeLanguage,
+                                                       onChangeTheme,
+                                                       handleLogoutClick
+                                                   }) => {
+
+    const isAuth = (
+        <Box>
+            <Button color="inherit" onClick={handleLogoutClick}>
+                {t("description.logout")}
+            </Button>
+        </Box>
+    )
+
+    const isNotAuth = (
+        <Box>
+            <Button color="inherit" component={Link} to='/login'>
+                {t("description.login")}
+            </Button>
+            <Button color="inherit" component={Link} to='/register'>
+                {t("description.register")}
+            </Button>
+        </Box>
+    )
+
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
@@ -42,12 +70,7 @@ const ButtonAppBar: React.FC<ButtonAppBarProps> = ({t, language, darkMode, onCha
                             {darkMode ? <Brightness7Icon/> : <Brightness4Icon/>}
                         </IconButton>
                     </Typography>
-                    <Button color="inherit" component={Link} to='/login'>
-                        {t("description.login")}
-                    </Button>
-                    <Button color="inherit" component={Link} to='/register'>
-                        {t("description.register")}
-                    </Button>
+                    {isAuthorize ? isAuth : isNotAuth}
                     <Box>
                         <FormControl sx={{m: 1, minWidth: 80}}>
                             <InputLabel id="demo-simple-select-autowidth-label"

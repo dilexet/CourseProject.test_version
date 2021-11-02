@@ -7,4 +7,6 @@ export type ButtonAppBarProps = {
     darkMode: boolean;
     onChangeTheme: () => void;
     onChangeLanguage: (event: SelectChangeEvent) => void;
+    isAuthorize: boolean;
+    handleLogoutClick: () => void;
 }

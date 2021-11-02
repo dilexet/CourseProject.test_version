@@ -3,7 +3,6 @@ import thunk from "redux-thunk";
 import {rootReducer} from './redusers';
 import {logger} from "redux-logger";
 
-
 declare global {
     interface Window {
         __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
@@ -18,3 +17,5 @@ export const store = createStore(
         applyMiddleware(thunk, logger),
         composeEnhancers())
 )
+
+export type AppDispatch = typeof store.dispatch

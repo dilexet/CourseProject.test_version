@@ -34,7 +34,7 @@ namespace CourseProject.API.Controllers
             _cookieOptions = cookieOptions;
         }
 
-        [HttpPost("/register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
             if (!ModelState.IsValid)
@@ -64,7 +64,7 @@ namespace CourseProject.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("/login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
             if (!ModelState.IsValid)
@@ -90,21 +90,23 @@ namespace CourseProject.API.Controllers
                 return NotFound(response);
             }
 
-            HttpContext.Response.Cookies.Append(_cookieOptions.Value.Key, result.Data.ToString() ?? string.Empty,
+            string key = _cookieOptions.Value.Key;
+            int lifeTime = Convert.ToInt32(_cookieOptions.Value.LifeTime);
+            HttpContext.Response.Cookies.Append(key, result.Data.ToString() ?? string.Empty,
                 new CookieOptions
                 {
                     HttpOnly = true,
                     SameSite = SameSiteMode.None,
                     Secure = true,
-                    Expires = DateTime.Today.AddDays(_cookieOptions.Value.LifeTime),
-                });
-
+                    Expires = DateTime.Today.AddDays(lifeTime),
+                }
+            );
             return Ok(response);
         }
 
 
         [Authorize]
-        [HttpPost("/logout")]
+        [HttpPost("logout")]
         public IActionResult Logout()
         {
             var jwt = Request.Cookies[_cookieOptions.Value.Key];
@@ -130,7 +132,7 @@ namespace CourseProject.API.Controllers
         }
 
         [Authorize]
-        [HttpPost("/token_verify")]
+        [HttpPost("token_verify")]
         public async Task<IActionResult> TokenVerify()
         {
             var jwt = Request.Cookies[_cookieOptions.Value.Key];

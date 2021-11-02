@@ -6,19 +6,13 @@ import * as yup from 'yup';
 import {SchemaOf} from "yup";
 import {LoginFormValues} from "../types/LoginFormValues";
 import {useActions} from "../hooks/useActions";
-import * as actions from "../store/action-creator/loginActions";
 import {useTypeSelector} from "../../../Shared/hooks/useTypeSelector";
-import {RootState} from "../../../Shared/store/redusers";
-import {connect} from "react-redux";
 
-const LoginContainer: React.FC<LoginContainerProps> = ({t, signIn, loginState}) => {
+const LoginContainer: React.FC<LoginContainerProps> = ({t}) => {
     const [redirect, setRedirect] = useState<boolean>(false);
 
-    // const {sendLogin} = useActions();
-    // const loginState = useTypeSelector(x => x.login);
-
-
-
+    const {SignIn} = useActions();
+    const loginState = useTypeSelector(x => x.login);
 
     // TODO: add regular expression from ./constants/RegularExpression
     const validationSchema: SchemaOf<LoginFormValues> = yup.object({
@@ -34,11 +28,9 @@ const LoginContainer: React.FC<LoginContainerProps> = ({t, signIn, loginState}) 
             .required('Please enter your password'),
     });
 
-    function handleSubmit (values: LoginFormValues) {
-        signIn(values)
-        // setRedirect(true)
-        console.log("handleSubmit:")
-        console.log(loginState)
+    function handleSubmit(values: LoginFormValues) {
+        SignIn(values)
+        setRedirect(true)
     }
 
     return (
@@ -47,12 +39,4 @@ const LoginContainer: React.FC<LoginContainerProps> = ({t, signIn, loginState}) 
     );
 }
 
-const mapStateToProps = (state: RootState) => ({
-    loginState: state.login,
-})
-
-const mapActionToProps = {
-    signIn: actions.SignIn,
-}
-
-export default connect(mapStateToProps, mapActionToProps)(LoginContainer);
+export default LoginContainer;

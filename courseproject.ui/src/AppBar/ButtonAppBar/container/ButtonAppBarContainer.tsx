@@ -2,6 +2,8 @@ import {SelectChangeEvent} from '@mui/material/Select';
 import ButtonAppBar from "../component/ButtonAppBar";
 import {ButtonAppBarContainerProps} from "../types/ButtonAppBarContainerProps";
 import React from "react";
+import {useTypeSelector} from "../../../Shared/hooks/useTypeSelector";
+import {useActions} from "../../../Authorize/Logout/hooks/useActions";
 
 
 const ButtonAppBarContainer: React.FC<ButtonAppBarContainerProps> = ({
@@ -13,6 +15,7 @@ const ButtonAppBarContainer: React.FC<ButtonAppBarContainerProps> = ({
                                                                          setDarkMode,
                                                                          setCookie
                                                                      }) => {
+    const {Logout} = useActions();
 
     const onChangeTheme = () => {
         setCookie('DarkMode', !darkMode, {
@@ -27,9 +30,18 @@ const ButtonAppBarContainer: React.FC<ButtonAppBarContainerProps> = ({
         i18n.changeLanguage(event.target.value);
     };
 
+    const handleLogoutClick = () => {
+        Logout();
+    }
+
+    const isAuthorize = useTypeSelector(x => x.login.isAuthorize)
+
     return (
-        <ButtonAppBar t={t} language={language} darkMode={darkMode} onChangeLanguage={onChangeLanguage}
-                      onChangeTheme={onChangeTheme}/>
+        <ButtonAppBar t={t} isAuthorize={isAuthorize} language={language} darkMode={darkMode}
+                      onChangeLanguage={onChangeLanguage}
+                      onChangeTheme={onChangeTheme}
+                      handleLogoutClick={handleLogoutClick}
+        />
     );
 }
 

@@ -4,11 +4,17 @@ import {RegisterContainerProps} from "../types/RegisterContainerProps";
 import {SchemaOf} from "yup";
 import * as yup from "yup";
 import {RegisterFormValues} from "../types/RegisterFormValues";
+import {useActions} from "../hooks/useActions";
+import {useTypeSelector} from "../../../Shared/hooks/useTypeSelector";
 
 const RegisterContainer: React.FC<RegisterContainerProps> = ({t}) => {
 
     const [redirect, setRedirect] = useState(false);
 
+    const {SignUp} = useActions();
+    const registerState = useTypeSelector(x => x.register);
+
+    // TODO: add regular expression from ./constants/RegularExpression
     const validationSchema: SchemaOf<RegisterFormValues> = yup.object({
         Email: yup
             .string()
@@ -31,12 +37,13 @@ const RegisterContainer: React.FC<RegisterContainerProps> = ({t}) => {
     });
 
     const handleSubmit = (values: RegisterFormValues) => {
-        alert(JSON.stringify(values, null, 2));
+        SignUp(values)
         setRedirect(true)
     }
 
     return (
-        <Register handleSubmit={handleSubmit} validation={validationSchema} t={t} redirect={redirect}/>
+        <Register handleSubmit={handleSubmit} registerState={registerState} validation={validationSchema} t={t}
+                  redirect={redirect}/>
     );
 }
 

@@ -26,6 +26,7 @@ namespace CourseProject.API.Controllers
 
         [HttpGet]
         [Authorize(Roles = "admin")]
+        [Route("weather")]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();

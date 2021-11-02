@@ -11,12 +11,14 @@ import {initialRegisterFieldValues} from "../constants/InitialFieldValues";
 import AuthorizeTextField from "../../Shared/component/AuthorizeTextField";
 
 const Register: React.FC<RegisterProps> = ({
+                                               registerState,
                                                handleSubmit,
                                                validation,
                                                t,
                                                redirect
                                            }) => {
-    if (redirect) {
+
+    if (!registerState.loading && !registerState.error && registerState.data && redirect) {
         return <Redirect to='/login'/>
     }
 
@@ -36,6 +38,9 @@ const Register: React.FC<RegisterProps> = ({
                 {t("register.signUp")}
             </Typography>
 
+            <Typography component="h1" variant="h5" fontStyle={{color: "red"}}>
+                {registerState.error ? registerState.error.message : ""}
+            </Typography>
 
             <Formik
                 initialValues={initialRegisterFieldValues}
@@ -58,8 +63,6 @@ const Register: React.FC<RegisterProps> = ({
                                 autoComplete="email"
                                 label={t("register.email")}
                                 {...(errors.Email && touched.Email && {error: true, helperText: errors.Email})}
-                                // error={errors.Email}
-                                // helperText={errors.Email}
                             />
                             <Field
                                 component={AuthorizeTextField}
@@ -68,8 +71,6 @@ const Register: React.FC<RegisterProps> = ({
                                 name="Name"
                                 label={t("register.name")}
                                 {...(errors.Name && touched.Name && {error: true, helperText: errors.Name})}
-                                // error={errors.Name}
-                                // helperText={errors.Name}
                             />
                             <Field
                                 component={AuthorizeTextField}
@@ -77,9 +78,11 @@ const Register: React.FC<RegisterProps> = ({
                                 name="Password"
                                 autoComplete="current-password"
                                 label={t("register.password")}
-                                {...(errors.Password && touched.Password && {error: true, helperText: errors.Password})}
-                                // error={(errors.Password) || (errors.ConfirmPassword)}
-                                // helperText={errors.Password}
+                                {...(((errors.Password && touched.Password) ||
+                                    (errors.ConfirmPassword && touched.ConfirmPassword)) && {
+                                    error: true,
+                                    helperText: errors.Password
+                                })}
                             />
                             <Field
                                 component={AuthorizeTextField}
@@ -90,8 +93,6 @@ const Register: React.FC<RegisterProps> = ({
                                     error: true,
                                     helperText: errors.ConfirmPassword
                                 })}
-                                // error={errors.ConfirmPassword}
-                                // helperText={errors.ConfirmPassword}
                             />
                             <pre>
                                 {JSON.stringify(values, null, 2)}

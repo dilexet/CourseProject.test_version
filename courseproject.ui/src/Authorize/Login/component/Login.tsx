@@ -17,7 +17,8 @@ const Login: React.FC<LoginProps> = ({
                                          t,
                                          redirect
                                      }) => {
-    if (!loginState.loading && !loginState.error && redirect) {
+
+    if (!loginState.loading && !loginState.error && loginState.data && redirect) {
         return <Redirect to='/'/>
     }
 

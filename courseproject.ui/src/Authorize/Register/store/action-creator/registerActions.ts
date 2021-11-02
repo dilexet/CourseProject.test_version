@@ -1,17 +1,37 @@
 import {Dispatch} from "redux";
-import axios from "axios";
 import {RegisterActionTypes} from "../types/RegisterActionTypes";
 import {RegisterAction} from "../types/RegisterTypes";
 import {RegisterFormValues} from "../../types/RegisterFormValues";
+import {registerAPi} from "./registerAPI";
 
-export const sendLogin = (data: RegisterFormValues) => {
+export const SignUp = (data: RegisterFormValues) => {
     return async (dispatch: Dispatch<RegisterAction>) => {
-        try {
-            dispatch({type: RegisterActionTypes.REGISTER})
-            const response = await axios.post("https://localhost:44368/register", data);
-            dispatch({type: RegisterActionTypes.REGISTER_SUCCESS, payload: response.data})
-        } catch (e) {
-            dispatch({type: RegisterActionTypes.REGISTER_ERROR, payload: "User already exists"})
-        }
+
+        dispatch({type: RegisterActionTypes.REGISTER})
+
+        await registerAPi().signUp(data)
+            .then(response => {
+                    console.log(response)
+                    dispatch({type: RegisterActionTypes.REGISTER_SUCCESS, payload: response.data})
+                }
+            ).catch(error => {
+                console.log(error)
+                if (error.response) {
+                    dispatch({
+                        type: RegisterActionTypes.REGISTER_ERROR,
+                        payload: error.response.data
+                    })
+                } else if (error.request) {
+                    dispatch({
+                        type: RegisterActionTypes.REGISTER_ERROR,
+                        payload: error.request.data
+                    })
+                } else {
+                    dispatch({
+                        type: RegisterActionTypes.REGISTER_ERROR,
+                        payload: {status: "error", message: "Server Error"}
+                    })
+                }
+            });
     }
 }

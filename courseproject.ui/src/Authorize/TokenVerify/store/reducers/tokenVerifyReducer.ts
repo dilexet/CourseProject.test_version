@@ -1,17 +1,18 @@
-import {LoginActionTypes} from "../types/LoginActionTypes";
-import {LoginAction, LoginState} from "../types/LoginTypes";
+import {TokenVerifyAction, TokenVerifyState} from "../types/TokenVerifyTypes";
+import {TokenVerifyActionTypes} from "../types/TokenVerifyActionTypes";
 import {AuthorizeResponse} from "../../../Shared/types/Response";
 
-const initialState: LoginState = {
+// TODO: переделать под получение юзера
+const initialState: TokenVerifyState = {
     data: null as AuthorizeResponse | null,
     loading: false,
     error: null as AuthorizeResponse | null,
     isAuthorize: false,
 }
 
-export const loginReducer = (state = initialState, action: LoginAction): LoginState => {
+export const tokenVerifyReducer = (state = initialState, action: TokenVerifyAction): TokenVerifyState => {
     switch (action.type) {
-        case LoginActionTypes.LOGIN:
+        case TokenVerifyActionTypes.TOKEN_VERIFY:
             return {
                 ...state,
                 loading: true,
@@ -19,15 +20,15 @@ export const loginReducer = (state = initialState, action: LoginAction): LoginSt
                 data: null,
                 isAuthorize: false
             }
-        case LoginActionTypes.LOGIN_SUCCESS:
+        case TokenVerifyActionTypes.TOKEN_VERIFY_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 error: null,
                 data: action.payload,
-                isAuthorize: true,
+                isAuthorize: true
             }
-        case LoginActionTypes.LOGIN_ERROR:
+        case TokenVerifyActionTypes.TOKEN_VERIFY_ERROR:
             return {
                 ...state,
                 loading: false,

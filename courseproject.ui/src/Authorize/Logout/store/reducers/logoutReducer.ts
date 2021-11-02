@@ -1,35 +1,35 @@
-import {RegisterActionTypes} from "../types/RegisterActionTypes";
-import {RegisterAction, RegisterState} from "../types/RegisterTypes";
 import {AuthorizeResponse} from "../../../Shared/types/Response";
+import {LogoutAction, LogoutState} from "../types/LogoutTypes";
+import {LogoutActionTypes} from "../types/LogoutActionTypes";
 
-const initialState: RegisterState = {
+const initialState: LogoutState = {
     data: null as AuthorizeResponse | null,
     loading: false,
-    error: null as AuthorizeResponse | null
+    error: null as AuthorizeResponse | null,
 }
 
-export const registerReducer = (state = initialState, action: RegisterAction): RegisterState => {
+export const logoutReducer = (state = initialState, action: LogoutAction): LogoutState => {
     switch (action.type) {
-        case RegisterActionTypes.REGISTER:
+        case LogoutActionTypes.LOGOUT:
             return {
                 ...state,
                 loading: true,
                 error: null,
-                data: null
+                data: null,
             }
-        case RegisterActionTypes.REGISTER_SUCCESS:
+        case LogoutActionTypes.LOGOUT_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 error: null,
-                data: action.payload
+                data: action.payload,
             }
-        case RegisterActionTypes.REGISTER_ERROR:
+        case LogoutActionTypes.LOGOUT_ERROR:
             return {
                 ...state,
                 loading: false,
                 error: action.payload,
-                data: null
+                data: null,
             }
         default:
             return state;

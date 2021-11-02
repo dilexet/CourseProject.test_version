@@ -1,9 +1,10 @@
 import {RegisterActionTypes} from "./RegisterActionTypes";
+import {AuthorizeResponse} from "../../../Shared/types/Response";
 
 export interface RegisterState {
-    data: any[] | unknown;
+    data: AuthorizeResponse | null;
     loading: boolean;
-    error: string | null;
+    error: AuthorizeResponse | null;
 }
 
 interface SendRegisterAction {
@@ -12,12 +13,12 @@ interface SendRegisterAction {
 
 interface SendRegisterSuccessAction {
     type: RegisterActionTypes.REGISTER_SUCCESS;
-    payload: any[] | unknown
+    payload: AuthorizeResponse | null
 }
 
 interface SendRegisterErrorAction {
     type: RegisterActionTypes.REGISTER_ERROR;
-    payload: string | null
+    payload: AuthorizeResponse | null
 }
 
 export type RegisterAction = SendRegisterAction | SendRegisterSuccessAction | SendRegisterErrorAction;

@@ -21,6 +21,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 using Serilog;
 using Serilog.Events;
 
@@ -55,16 +56,18 @@ namespace CourseProject.API
                 });
             });
 
+            services.AddControllers();
+
             services.AddOptions();
 
             services.Configure<JwtAuthOptions>(Configuration.GetSection("JwtAuthOptions"));
             services.Configure<CookieConfigOptions>(Configuration.GetSection("CookieConfigOptions"));
 
-            services.AddControllers();
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddScoped<ICryptography, Cryptography>();
+            services.AddSingleton<ICryptography, Cryptography>();
             services.AddScoped<IContextFactory, AppDbContextFactory>();
             services.AddScoped<JwtService>();
 
@@ -84,10 +87,15 @@ namespace CourseProject.API
                     provider.GetService<JwtService>(),
                     provider.GetService<IMapper>()));
 
+            services.AddMemoryCache();
+            services.AddDistributedMemoryCache();
+
+            services.AddSession();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateLifetime = true,
@@ -98,7 +106,7 @@ namespace CourseProject.API
                         ValidateAudience = false
                     };
                 });
-
+            services.AddAuthorization();
 
             // services.AddDbContext<AppDbContext>(p => { p.UseSqlServer(connectionString); });
 
@@ -155,18 +163,18 @@ namespace CourseProject.API
             });
 
             app.UseHttpsRedirection();
-
-            app.UseDefaultFiles();
+            app.UseStatusCodePages();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
-
+            
+            // TODO: move to middleware
             app.Use(async (context, next) =>
             {
                 var token = context.Request.Cookies[Configuration["CookieConfigOptions:Key"]];
                 if (!string.IsNullOrEmpty(token))
                     context.Request.Headers.Add("Authorization", "Bearer " + token);
-            
+
                 await next();
             });
 

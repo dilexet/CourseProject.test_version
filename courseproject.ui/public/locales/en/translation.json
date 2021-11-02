@@ -3,7 +3,8 @@
   "description": {
     "home": "Home",
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "logout": "Logout"
   },
   "login": {
     "signIn": "Sign In",
