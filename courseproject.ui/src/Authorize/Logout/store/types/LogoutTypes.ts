@@ -1,5 +1,5 @@
 import {LogoutActionTypes} from "./LogoutActionTypes";
-import {AuthorizeResponse} from "../../../Shared/types/Response";
+import {AuthorizeResponse} from "../../../Shared/types/AuthorizeResponse";
 
 export interface LogoutState {
     data: AuthorizeResponse | null;

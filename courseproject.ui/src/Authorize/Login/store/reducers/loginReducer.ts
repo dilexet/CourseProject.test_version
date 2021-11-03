@@ -1,11 +1,11 @@
 import {LoginActionTypes} from "../types/LoginActionTypes";
 import {LoginAction, LoginState} from "../types/LoginTypes";
-import {AuthorizeResponse} from "../../../Shared/types/Response";
+import {LoginResponse} from "../types/LoginResponse";
 
 const initialState: LoginState = {
-    data: null as AuthorizeResponse | null,
+    data: null as LoginResponse | null,
     loading: false,
-    error: null as AuthorizeResponse | null,
+    error: null as LoginResponse | null,
     isAuthorize: false,
 }
 

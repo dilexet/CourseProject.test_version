@@ -37,13 +37,7 @@ namespace CourseProject.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             Result result;
-
             try
             {
                 result = await _accountService.RegisterAsync(_mapper.Map<RegisterModel>(registerViewModel));
@@ -51,27 +45,35 @@ namespace CourseProject.API.Controllers
             catch (Exception e)
             {
                 Log.Error(e.ToString());
-                return BadRequest();
+                return BadRequest(new Response()
+                {
+                    Code = StatusCodes.Status500InternalServerError,
+                    Status = "error",
+                    Message = "Server error"
+                });
             }
-
-            Response response = _mapper.Map<Response>(result);
 
             if (result.Status.Equals(StatusType.Error))
             {
-                return BadRequest(response);
+                return BadRequest(new Response()
+                {
+                    Code = StatusCodes.Status400BadRequest,
+                    Status = "error",
+                    Message = result.Message
+                });
             }
 
-            return Ok(response);
+            return Ok(new Response()
+            {
+                Code = StatusCodes.Status201Created,
+                Status = "success",
+                Message = result.Message
+            });
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             Result result;
             try
             {
@@ -80,14 +82,23 @@ namespace CourseProject.API.Controllers
             catch (Exception e)
             {
                 Log.Error(e.ToString());
-                return BadRequest();
+                return BadRequest(new Response()
+                {
+                    Code = StatusCodes.Status500InternalServerError,
+                    Status = "error",
+                    Message = "Server error",
+                });
             }
 
-            Response response = _mapper.Map<Response>(result);
 
             if (result.Status.Equals(StatusType.Error))
             {
-                return NotFound(response);
+                return BadRequest(new Response()
+                {
+                    Code = StatusCodes.Status400BadRequest,
+                    Status = "error",
+                    Message = result.Message
+                });
             }
 
             string key = _cookieOptions.Value.Key;
@@ -101,7 +112,12 @@ namespace CourseProject.API.Controllers
                     Expires = DateTime.Today.AddDays(lifeTime),
                 }
             );
-            return Ok(response);
+            return Ok(new Response()
+            {
+                Code = StatusCodes.Status200OK,
+                Status = "success",
+                Message = result.Message
+            });
         }
 
 
@@ -114,7 +130,9 @@ namespace CourseProject.API.Controllers
             {
                 return Unauthorized(new Response
                 {
-                    Status = "error", Message = "User is not authorized"
+                    Code = StatusCodes.Status401Unauthorized,
+                    Status = "error",
+                    Message = "User is unauthorized"
                 });
             }
 
@@ -127,7 +145,9 @@ namespace CourseProject.API.Controllers
             });
             return Ok(new Response
             {
-                Status = "success", Message = "Logout is success"
+                Code = StatusCodes.Status200OK,
+                Status = "success",
+                Message = "User is logout"
             });
         }
 
@@ -137,14 +157,24 @@ namespace CourseProject.API.Controllers
         {
             var jwt = Request.Cookies[_cookieOptions.Value.Key];
             var result = await _accountService.TokenVerify(jwt);
-            var response = _mapper.Map<Response>(result);
             if (result.Status == StatusType.Error)
             {
-                return Unauthorized(response);
+                return Unauthorized(new Response()
+                {
+                    Code = StatusCodes.Status401Unauthorized,
+                    Status = "error",
+                    Message = "User is unauthorized"
+                });
             }
 
             UserViewModel user = _mapper.Map<UserViewModel>(result.Data);
-            return Ok(user);
+            return Ok(new Response()
+            {
+                Code = StatusCodes.Status200OK,
+                Status = "success",
+                Message = "User is authorized",
+                Data = user
+            });
         }
     }
 }

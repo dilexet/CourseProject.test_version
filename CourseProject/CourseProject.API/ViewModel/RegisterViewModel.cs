@@ -7,7 +7,7 @@ namespace CourseProject.API.ViewModel
         [Required(ErrorMessage = "User Name is required")]
         public string Name { get; set; }
 
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "The Email field is not a valid e-mail address")]
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
 

@@ -21,11 +21,6 @@ namespace CourseProject.API.Mapping
 
             CreateMap<UserModel, UserViewModel>()
                 .ForMember(dest => dest.Role, source => source.MapFrom(res => res.Role.Name));
-
-
-            CreateMap<Result, Response>()
-                .ForMember(dest => dest.Status, source => source.MapFrom(res => res.Status.ToString().ToLower()))
-                .ForMember(dest => dest.Message, source => source.MapFrom(res => res.Message));
         }
     }
 }

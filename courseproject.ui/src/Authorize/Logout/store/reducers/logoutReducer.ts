@@ -1,4 +1,4 @@
-import {AuthorizeResponse} from "../../../Shared/types/Response";
+import {AuthorizeResponse} from "../../../Shared/types/AuthorizeResponse";
 import {LogoutAction, LogoutState} from "../types/LogoutTypes";
 import {LogoutActionTypes} from "../types/LogoutActionTypes";
 

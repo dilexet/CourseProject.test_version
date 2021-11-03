@@ -1,10 +1,10 @@
 import {LoginActionTypes} from "./LoginActionTypes";
-import {AuthorizeResponse} from "../../../Shared/types/Response";
+import {LoginResponse} from "./LoginResponse";
 
 export interface LoginState {
-    data: AuthorizeResponse | null;
+    data: LoginResponse | null;
     loading: boolean;
-    error: AuthorizeResponse | null;
+    error: LoginResponse | null;
     isAuthorize: boolean; // TODO: remove
 }
 
@@ -14,12 +14,12 @@ interface SendLoginAction {
 
 interface SendLoginSuccessAction {
     type: LoginActionTypes.LOGIN_SUCCESS;
-    payload: AuthorizeResponse | null
+    payload: LoginResponse | null
 }
 
 interface SendLoginErrorAction {
     type: LoginActionTypes.LOGIN_ERROR;
-    payload: AuthorizeResponse | null
+    payload: LoginResponse | null
 }
 
 export type LoginAction = SendLoginAction | SendLoginSuccessAction | SendLoginErrorAction;

@@ -18,7 +18,7 @@ const Register: React.FC<RegisterProps> = ({
                                                redirect
                                            }) => {
 
-    if (!registerState.loading && !registerState.error && registerState.data && redirect) {
+    if (!registerState.loading && registerState.data?.status === "success" && redirect) {
         return <Redirect to='/login'/>
     }
 
@@ -62,7 +62,11 @@ const Register: React.FC<RegisterProps> = ({
                                 name="Email"
                                 autoComplete="email"
                                 label={t("register.email")}
-                                {...(errors.Email && touched.Email && {error: true, helperText: errors.Email})}
+                                {...(((errors.Email && touched.Email) ||
+                                    (registerState.error?.errors?.Email)) && {
+                                    error: true,
+                                    helperText: errors.Email || registerState.error?.errors?.Email
+                                })}
                             />
                             <Field
                                 component={AuthorizeTextField}
@@ -70,7 +74,11 @@ const Register: React.FC<RegisterProps> = ({
                                 type="text"
                                 name="Name"
                                 label={t("register.name")}
-                                {...(errors.Name && touched.Name && {error: true, helperText: errors.Name})}
+                                {...(((errors.Name && touched.Name) ||
+                                    (registerState.error?.errors?.Name)) && {
+                                    error: true,
+                                    helperText: errors.Name || registerState.error?.errors?.Name
+                                })}
                             />
                             <Field
                                 component={AuthorizeTextField}
@@ -79,9 +87,11 @@ const Register: React.FC<RegisterProps> = ({
                                 autoComplete="current-password"
                                 label={t("register.password")}
                                 {...(((errors.Password && touched.Password) ||
-                                    (errors.ConfirmPassword && touched.ConfirmPassword)) && {
+                                    (errors.ConfirmPassword && touched.ConfirmPassword) ||
+                                    (registerState.error?.errors?.Password || registerState.error?.errors?.ConfirmPassword)
+                                ) && {
                                     error: true,
-                                    helperText: errors.Password
+                                    helperText: errors.Password || registerState.error?.errors?.Password
                                 })}
                             />
                             <Field
@@ -89,9 +99,10 @@ const Register: React.FC<RegisterProps> = ({
                                 type="password"
                                 name="ConfirmPassword"
                                 label={t("register.passwordConfirm")}
-                                {...(errors.ConfirmPassword && touched.ConfirmPassword && {
+                                {...(((errors.ConfirmPassword && touched.ConfirmPassword) ||
+                                    (registerState.error?.errors?.ConfirmPassword)) && {
                                     error: true,
-                                    helperText: errors.ConfirmPassword
+                                    helperText: errors.ConfirmPassword || registerState.error?.errors?.ConfirmPassword
                                 })}
                             />
                             <pre>

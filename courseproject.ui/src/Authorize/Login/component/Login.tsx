@@ -18,7 +18,7 @@ const Login: React.FC<LoginProps> = ({
                                          redirect
                                      }) => {
 
-    if (!loginState.loading && !loginState.error && loginState.data && redirect) {
+    if (!loginState.loading && loginState.data?.status === "success" && redirect) {
         return <Redirect to='/'/>
     }
 
@@ -61,7 +61,11 @@ const Login: React.FC<LoginProps> = ({
                                 autoComplete="login"
                                 label={t("login.login")}
                                 name="Login"
-                                {...(errors.Login && touched.Login && {error: true, helperText: errors.Login})}
+                                {...(((errors.Login && touched.Login) ||
+                                    (loginState.error?.errors?.Login)) && {
+                                    error: true,
+                                    helperText: errors.Login || loginState.error?.errors?.Login
+                                })}
                             />
                             <Field
                                 component={AuthorizeTextField}
@@ -69,7 +73,11 @@ const Login: React.FC<LoginProps> = ({
                                 type="password"
                                 name="Password"
                                 label={t("login.password")}
-                                {...(errors.Password && touched.Password && {error: true, helperText: errors.Password})}
+                                {...(((errors.Password && touched.Password) ||
+                                    (loginState.error?.errors?.Password)) && {
+                                    error: true,
+                                    helperText: errors.Password || loginState.error?.errors?.Password
+                                })}
                             />
                             <pre>
                                 {JSON.stringify(values, null, 2)}

@@ -12,8 +12,6 @@ import {useTranslation} from "react-i18next";
 
 
 // TODO: создать обёртку для компонента App( к примеру Main, и сделать для Main контейнер с функциональностью)
-// TODO: можно создать интерфейсы с полями как на беке, и принимать массив этого интерфейса
-// TODO: вынести api-шки отедельно и url
 const App: React.FC = () => {
     const [cookie, setCookie] = useCookies();
 

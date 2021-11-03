@@ -1,5 +1,5 @@
 import {TokenVerifyActionTypes} from "./TokenVerifyActionTypes";
-import {AuthorizeResponse} from "../../../Shared/types/Response";
+import {AuthorizeResponse} from "../../../Shared/types/AuthorizeResponse";
 
 export interface TokenVerifyState {
     data: AuthorizeResponse | null;
