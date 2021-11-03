@@ -14,7 +14,7 @@ using Microsoft.Extensions.Options;
 using Serilog;
 
 // ReSharper disable TemplateIsNotCompileTimeConstantProblem
-
+// TODO: optimize
 namespace CourseProject.API.Controllers
 {
     [Route("api/[controller]")]
@@ -121,11 +121,10 @@ namespace CourseProject.API.Controllers
         }
 
 
-        [Authorize]
-        [HttpPost("logout")]
+        [HttpGet("logout")]
         public IActionResult Logout()
         {
-            var jwt = Request.Cookies[_cookieOptions.Value.Key];
+            var jwt = HttpContext.Request.Cookies[_cookieOptions.Value.Key];
             if (jwt == null)
             {
                 return Unauthorized(new Response
@@ -136,7 +135,7 @@ namespace CourseProject.API.Controllers
                 });
             }
 
-            Response.Cookies.Append(_cookieOptions.Value.Key, jwt, new CookieOptions
+            HttpContext.Response.Cookies.Append(_cookieOptions.Value.Key, jwt, new CookieOptions
             {
                 HttpOnly = true,
                 SameSite = SameSiteMode.None,
@@ -151,8 +150,7 @@ namespace CourseProject.API.Controllers
             });
         }
 
-        [Authorize]
-        [HttpPost("token_verify")]
+        [HttpGet("token_verify")]
         public async Task<IActionResult> TokenVerify()
         {
             var jwt = Request.Cookies[_cookieOptions.Value.Key];

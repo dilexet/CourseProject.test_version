@@ -87,6 +87,7 @@ const Login: React.FC<LoginProps> = ({
                                 fullWidth
                                 variant="contained"
                                 sx={{mt: 3, mb: 2}}
+                                disabled={loginState.loading}
                             >
                                 {t("login.signIn")}
                             </Button>

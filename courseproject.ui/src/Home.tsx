@@ -3,7 +3,7 @@ import {Typography} from '@mui/material';
 import {useTypeSelector} from "./Shared/hooks/useTypeSelector";
 
 const Home: React.FC = () => {
-    const state = useTypeSelector(x => x.login);
+    const state = useTypeSelector(x => x.token_verify);
 
     return (
         <div>
@@ -11,7 +11,7 @@ const Home: React.FC = () => {
                 Home
             </Typography>
             <Typography>
-                {state.data ? state.data.message : ""}
+                {JSON.stringify(state.data?.data, null, 2)}
             </Typography>
         </div>
     );

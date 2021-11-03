@@ -9,11 +9,15 @@ import RegisterContainer from "./Authorize/Register/container/RegisterContainer"
 import {ThemeProvider, CssBaseline, createTheme} from '@mui/material';
 import {useCookies} from "react-cookie";
 import {useTranslation} from "react-i18next";
+import {useActions} from "./Authorize/TokenVerify/hooks/useActions";
 
 
 // TODO: создать обёртку для компонента App( к примеру Main, и сделать для Main контейнер с функциональностью)
 const App: React.FC = () => {
     const [cookie, setCookie] = useCookies();
+
+    // TODO: move somewhere
+    const {TokenVerify} = useActions();
 
     const {t, i18n} = useTranslation();
     const [language, setLanguage] = React.useState<string>(cookie.i18next === undefined ? 'en' : cookie.i18next);
@@ -32,6 +36,7 @@ const App: React.FC = () => {
     });
 
     useEffect(() => {
+        TokenVerify();
         if (cookie.DarkMode === undefined) {
             setCookie('DarkMode', darkMode, {
                 path: '/',

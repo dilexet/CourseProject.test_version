@@ -113,6 +113,7 @@ const Register: React.FC<RegisterProps> = ({
                                 fullWidth
                                 variant="contained"
                                 sx={{mt: 3, mb: 2}}
+                                disabled={registerState.loading}
                             >
                                 {t("register.signUp")}
                             </Button>

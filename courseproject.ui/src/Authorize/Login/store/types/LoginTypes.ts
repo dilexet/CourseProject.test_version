@@ -5,7 +5,6 @@ export interface LoginState {
     data: LoginResponse | null;
     loading: boolean;
     error: LoginResponse | null;
-    isAuthorize: boolean; // TODO: remove
 }
 
 interface SendLoginAction {

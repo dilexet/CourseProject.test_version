@@ -1,12 +1,11 @@
 import {TokenVerifyAction, TokenVerifyState} from "../types/TokenVerifyTypes";
 import {TokenVerifyActionTypes} from "../types/TokenVerifyActionTypes";
-import {AuthorizeResponse} from "../../../Shared/types/AuthorizeResponse";
+import {TokenVerifyResponse} from "../types/TokenVerifyResponse";
 
-// TODO: переделать под получение юзера
 const initialState: TokenVerifyState = {
-    data: null as AuthorizeResponse | null,
+    data: null as TokenVerifyResponse | null,
     loading: false,
-    error: null as AuthorizeResponse | null,
+    error: null as TokenVerifyResponse | null,
     isAuthorize: false,
 }
 

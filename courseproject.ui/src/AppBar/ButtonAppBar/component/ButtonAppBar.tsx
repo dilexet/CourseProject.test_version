@@ -29,7 +29,7 @@ const ButtonAppBar: React.FC<ButtonAppBarProps> = ({
 
     const isAuth = (
         <Box>
-            <Button color="inherit" onClick={handleLogoutClick}>
+            <Button color="inherit" onClick={handleLogoutClick.bind(this)}>
                 {t("description.logout")}
             </Button>
         </Box>

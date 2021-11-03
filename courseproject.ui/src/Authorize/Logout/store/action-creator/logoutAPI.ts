@@ -4,6 +4,6 @@ import {AuthorizeResponse} from "../../../Shared/types/AuthorizeResponse";
 
 export const logoutAPI = (url = LogoutURL) => {
     return {
-        logout: async () => await axios.post<AuthorizeResponse>(url, {withCredentials: true})
+        logout: async () => await axios.get<AuthorizeResponse>(url, {withCredentials: true})
     }
 }

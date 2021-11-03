@@ -6,7 +6,6 @@ const initialState: LoginState = {
     data: null as LoginResponse | null,
     loading: false,
     error: null as LoginResponse | null,
-    isAuthorize: false,
 }
 
 export const loginReducer = (state = initialState, action: LoginAction): LoginState => {
@@ -17,7 +16,6 @@ export const loginReducer = (state = initialState, action: LoginAction): LoginSt
                 loading: true,
                 error: null,
                 data: null,
-                isAuthorize: false
             }
         case LoginActionTypes.LOGIN_SUCCESS:
             return {
@@ -25,7 +23,6 @@ export const loginReducer = (state = initialState, action: LoginAction): LoginSt
                 loading: false,
                 error: null,
                 data: action.payload,
-                isAuthorize: true,
             }
         case LoginActionTypes.LOGIN_ERROR:
             return {
@@ -33,7 +30,6 @@ export const loginReducer = (state = initialState, action: LoginAction): LoginSt
                 loading: false,
                 error: action.payload,
                 data: null,
-                isAuthorize: false
             }
         default:
             return state;

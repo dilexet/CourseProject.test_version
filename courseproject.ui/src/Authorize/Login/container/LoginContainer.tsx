@@ -7,11 +7,14 @@ import {SchemaOf} from "yup";
 import {LoginFormValues} from "../types/LoginFormValues";
 import {useActions} from "../hooks/useActions";
 import {useTypeSelector} from "../../../Shared/hooks/useTypeSelector";
+import {useActions as useTokenVerifyAction} from "../../TokenVerify/hooks/useActions";
 
 const LoginContainer: React.FC<LoginContainerProps> = ({t}) => {
     const [redirect, setRedirect] = useState<boolean>(false);
 
     const {SignIn} = useActions();
+    const {TokenVerify} = useTokenVerifyAction();
+
     const loginState = useTypeSelector(x => x.login);
 
     // TODO: add regular expression from ./constants/RegularExpression
@@ -28,8 +31,9 @@ const LoginContainer: React.FC<LoginContainerProps> = ({t}) => {
             .required('Please enter your password'),
     });
 
-    function handleSubmit(values: LoginFormValues) {
-        SignIn(values)
+    const handleSubmit = async (values: LoginFormValues) => {
+        await SignIn(values)
+        await TokenVerify();
         setRedirect(true)
     }
 

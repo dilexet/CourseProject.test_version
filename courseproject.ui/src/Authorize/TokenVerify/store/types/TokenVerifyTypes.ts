@@ -1,10 +1,10 @@
 import {TokenVerifyActionTypes} from "./TokenVerifyActionTypes";
-import {AuthorizeResponse} from "../../../Shared/types/AuthorizeResponse";
+import {TokenVerifyResponse} from "./TokenVerifyResponse";
 
 export interface TokenVerifyState {
-    data: AuthorizeResponse | null;
+    data: TokenVerifyResponse | null;
     loading: boolean;
-    error: AuthorizeResponse | null;
+    error: TokenVerifyResponse | null;
     isAuthorize: boolean;
 }
 
@@ -14,12 +14,12 @@ interface SendTokenVerifyAction {
 
 interface SendTokenVerifySuccessAction {
     type: TokenVerifyActionTypes.TOKEN_VERIFY_SUCCESS;
-    payload: AuthorizeResponse | null
+    payload: TokenVerifyResponse | null
 }
 
 interface SendTokenVerifyErrorAction {
     type: TokenVerifyActionTypes.TOKEN_VERIFY_ERROR;
-    payload: AuthorizeResponse | null
+    payload: TokenVerifyResponse | null
 }
 
 export type TokenVerifyAction = SendTokenVerifyAction | SendTokenVerifySuccessAction | SendTokenVerifyErrorAction;

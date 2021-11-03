@@ -12,7 +12,10 @@ export const TokenVerify = () => {
         await tokenVerifyAPi().tokenVerify()
             .then(response => {
                     console.log(response)
-                    dispatch({type: TokenVerifyActionTypes.TOKEN_VERIFY_SUCCESS, payload: response.data})
+                    dispatch({
+                        type: TokenVerifyActionTypes.TOKEN_VERIFY_SUCCESS,
+                        payload: response.data
+                    })
                 }
             ).catch(error => {
                 console.log(error)
