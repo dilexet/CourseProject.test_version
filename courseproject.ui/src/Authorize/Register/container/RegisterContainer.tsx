@@ -14,7 +14,6 @@ const RegisterContainer: React.FC<RegisterContainerProps> = ({t}) => {
     const {SignUp} = useActions();
     const registerState = useTypeSelector(x => x.register);
 
-    // TODO: add regular expression from ./constants/RegularExpression
     const validationSchema: SchemaOf<RegisterFormValues> = yup.object({
         Email: yup
             .string()

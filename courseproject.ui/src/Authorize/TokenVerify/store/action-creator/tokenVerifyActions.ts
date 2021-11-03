@@ -3,7 +3,6 @@ import {tokenVerifyAPi} from "./tokenVerifyAPI";
 import {TokenVerifyAction} from "../types/TokenVerifyTypes";
 import {TokenVerifyActionTypes} from "../types/TokenVerifyActionTypes";
 
-// TODO: вызывать в App, но вместо прокидывания в пропсы, создать контекст
 export const TokenVerify = () => {
     return async (dispatch: Dispatch<TokenVerifyAction>) => {
 

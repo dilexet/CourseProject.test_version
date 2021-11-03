@@ -17,7 +17,6 @@ const LoginContainer: React.FC<LoginContainerProps> = ({t}) => {
 
     const loginState = useTypeSelector(x => x.login);
 
-    // TODO: add regular expression from ./constants/RegularExpression
     const validationSchema: SchemaOf<LoginFormValues> = yup.object({
         Login: yup
             .string()
