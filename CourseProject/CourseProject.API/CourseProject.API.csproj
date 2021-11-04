@@ -27,8 +27,4 @@
       <ProjectReference Include="..\CourseProject.DAL\CourseProject.DAL.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Abstract" />
-    </ItemGroup>
-
 </Project>

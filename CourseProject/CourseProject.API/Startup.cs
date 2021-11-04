@@ -35,7 +35,7 @@ namespace CourseProject.API
         }
 
         private IConfiguration Configuration { get; }
-        private const string NamePolicy = "StoreCors";
+        private const string NamePolicy = "DefaultCors";
 
 
         public void ConfigureServices(IServiceCollection services)
