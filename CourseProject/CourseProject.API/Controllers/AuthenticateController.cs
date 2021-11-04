@@ -7,14 +7,12 @@ using CourseProject.BLL.Abstract;
 using CourseProject.BLL.Enums;
 using CourseProject.BLL.Models;
 using CourseProject.BLL.SharedModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Serilog;
 
 // ReSharper disable TemplateIsNotCompileTimeConstantProblem
-// TODO: optimize
 namespace CourseProject.API.Controllers
 {
     [Route("api/[controller]")]
@@ -34,10 +32,12 @@ namespace CourseProject.API.Controllers
             _cookieOptions = cookieOptions;
         }
 
+        // TODO: optimize Register(1:12 seconds)
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
             Result result;
+
             try
             {
                 result = await _accountService.RegisterAsync(_mapper.Map<RegisterModel>(registerViewModel));
@@ -75,6 +75,7 @@ namespace CourseProject.API.Controllers
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
             Result result;
+
             try
             {
                 result = await _accountService.LoginAsync(_mapper.Map<LoginModel>(loginViewModel));
@@ -89,7 +90,6 @@ namespace CourseProject.API.Controllers
                     Message = "Server error",
                 });
             }
-
 
             if (result.Status.Equals(StatusType.Error))
             {
@@ -112,6 +112,7 @@ namespace CourseProject.API.Controllers
                     Expires = DateTime.Today.AddDays(lifeTime),
                 }
             );
+
             return Ok(new Response()
             {
                 Code = StatusCodes.Status200OK,
